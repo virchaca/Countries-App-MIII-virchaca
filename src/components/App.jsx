@@ -32,7 +32,7 @@ function App() {
         }
         )
         setCountriesList(cleanCountry);
-        console.log(cleanCountry);
+       
       });
   }, []);
 
@@ -51,16 +51,26 @@ function App() {
 
       .map((item, i) => {
         return (
-          <li className="li" key={i}>
+          <li className={`li ${hiddenItems[i] ? "hide" : ""}`} key={i}>
+            <button onClick={handleClickRemove}>X</button>
             <p>{item.flag}</p>
             <p>{item.name}</p>
             <p>{item.capital}</p>
-            <p>{item.continent}</p>
+            <p>{item.continent}</p>            
           </li>
         );
       });
   };
+  const [hiddenItems, setHiddenItems] = useState({});
 
+  const handleClickRemove = (i) => {
+    // Copia el estado actual de elementos ocultos
+    const updatedHiddenItems = { ...hiddenItems };
+    // Cambia el estado de ocultar/mostrar para el elemento con el índice correspondiente
+    updatedHiddenItems[i] = !updatedHiddenItems[i];
+    setHiddenItems(updatedHiddenItems);
+  };
+  
   const handleInput = (ev) => {
     setSearch(ev.target.value);
   };
